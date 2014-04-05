@@ -1,11 +1,14 @@
 include_recipe "homebrew"
 
-execute "tap phinze/homebrew-cask" do
-  command "brew tap phinze/homebrew-cask"
-  not_if "brew tap | grep 'cask' > /dev/null 2>&1"
+bash "tap phinze/homebrew-cask" do
+  action :run
+  not_if do `brew cask list`.include? 'google-chrome' end
 end
 
-package "brew-cask"
+bash "brew install brew-cask" do
+  action :run
+  not_if do system("brew cask list") end
+end
 
 directory '/opt/homebrew-cask/Caskroom' do
   action :create
@@ -13,10 +16,12 @@ directory '/opt/homebrew-cask/Caskroom' do
   mode '0755'
   owner node['current_user']
   group 'staff'
+  not_if do File.exists?('/opt/homebrew-cask/Caskroom') end
 end
 
 directory '/opt/homebrew-cask' do
   owner node['current_user']
+  not_if do File.exists?('/opt/homebrew-cask') end
 end
 
 execute 'update cask' do

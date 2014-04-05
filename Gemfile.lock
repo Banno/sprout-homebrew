@@ -28,9 +28,16 @@ GEM
       mixlib-log (~> 1.3)
       moneta (< 0.7.0)
       rack
+    chefspec (3.4.0)
+      chef (~> 11.0)
+      fauxhai (~> 2.0)
+      rspec (~> 2.14)
     coderay (1.1.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
+    fauxhai (2.1.0)
+      net-ssh
+      ohai
     foodcritic (3.0.3)
       erubis
       gherkin (~> 2.11.7)
@@ -115,7 +122,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  archive-tar-minitar
+  chefspec
   foodcritic
   plist
+  rake
   rspec
   soloist
